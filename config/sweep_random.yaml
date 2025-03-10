@@ -1,0 +1,36 @@
+project: tutorial
+program: python
+command:
+  - poetry
+  - run
+  - tutorial
+  - --wandb
+method: random
+metric:
+  name: valid_rmse
+  goal: minimize
+parameters:
+  embedding_dim:
+    values: [32, 64]
+  lr:
+    values: [0.001, 0.005]
+  weight_decay:
+    distribution: uniform
+    max: 0.0001
+    min: 0.00001
+  batch_size:
+    values: [128]
+  model:
+    values: ["lfm"]
+  num_epochs:
+    values: [10]
+  seed:
+    values: [42]
+  metric:
+    values: ["rmse"]
+  data_path:
+    values: ["./data/ML100K.csv"]
+  train_ratio:
+    values: [0.8]
+  valid_ratio:
+    values: [0.1]

@@ -1,0 +1,46 @@
+project: tutorial
+program: python
+command:
+  - poetry
+  - run
+  - tutorial
+  - --wandb
+method: bayes
+metric:
+  name: valid_rmse
+  goal: minimize
+parameters:
+  embedding_dim:
+    distribution: q_log_uniform_values
+    max: 256
+    min: 8
+    q: 2
+  lr:
+    distribution: log_uniform_values
+    min: 0.00001
+    max: 0.1
+  weight_decay:
+    distribution: log_uniform_values
+    min: 0.00001
+    max: 0.1
+  batch_size:
+    values: [1024]
+  model:
+    values: ["lfm"]
+  num_epochs:
+    values: [10]
+  seed:
+    values: [42]
+  metric:
+    values: ["rmse"]
+  data_path:
+    values: ["./data/ML100K.csv"]
+  train_ratio:
+    values: [0.8]
+  valid_ratio:
+    values: [0.1]
+early_terminate:
+  type: hyperband
+  s: 2
+  eta: 3
+  max_iter: 10
